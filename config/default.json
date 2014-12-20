@@ -1,13 +1,14 @@
 {
 	"Twitter": {
-		consumer_key:         '',
-		consumer_secret:      '',
-		access_token:         '',
-		access_token_secret:  ''
+		"consumer_key":         "",
+		"consumer_secret":      "",
+		"access_token":         "",
+		"access_token_secret":  "",
+		"keyword": "#moo"
 	},
-	"Images": {
-		"input": '',
-		"output": ''
-	},
-	"Message" : "Hi."
+	"Meme": {
+		"input": "",
+		"output": "",
+		"message" : ""
+	}
 }

@@ -6,16 +6,16 @@ var fs = require('fs');				// File System functionality
 var oauth = require('oauth');		// OAuth module to interact with the Twitter file upload API
 
 /* Pull in the configuration data */
-var twitcreds = config.get('Twitter');
+var twitter = config.get('Twitter');
 var meme = config.get('Meme');
 
 /* Create the handlers */
-var T = new Twit(twitcreds);	// Create a new Twitter Handler with the API credentials
+var T = new Twit(twitter);	// Create a new Twitter Handler with the API credentials
 var oa = new oauth.OAuth(		// Create a new OAuth Handler to handle the media uploads
 	'https://twitter.com/oauth/request_token', 
 	'https://twitter.com/oauth/access_token',
-	twitcreds.consumer_key,
-	twitcreds.consumer_secret,
+	twitter.consumer_key,
+	twitter.consumer_secret,
 	'1.0',
 	'https://github.com/bladow/christweet/wiki',
 	'HMAC-SHA1'
@@ -24,7 +24,8 @@ var stream = T.stream('user');	// Get a stream for the Twitter "user" stream API
 
 /* Stream Event on new direct messages */
 stream.on('direct_message', function(directMsg){
-	if(/#moo/.test(directMsg.direct_message.text)){		// RegEx test to see of the sender included a #moo tag in the DM
+	var keyword = new RegExp(twitter.keyword); // Create a Regular Expression from the supplied twitter keyword
+	if(keyword.test(directMsg.direct_message.text)){		// RegEx test to see of the sender included a #moo tag in the DM
 		//console.log("It's a Moo! Thanks " +  directMsg.direct_message.sender.screen_name + "!");
 		fs.readdir('./roo/', function(err,files){	// Iterate through the base image files
 			var index = Math.floor(Math.random() * files.length);	// Get a random index to one of the pictures in the directory
@@ -43,7 +44,7 @@ stream.on('direct_message', function(directMsg){
 				var base = fs.readFileSync(filename,'base64'); // Read in the meme as a base64 String
 				var returnStatus = '@' + directMsg.direct_message.sender.screen_name + ' Moo! '; // Construct the Status message to address the user
 				/* Post a the new media file to the Twitter Upload service */
-				oa.post('https://upload.twitter.com/1.1/media/upload.json', twitcreds.access_token, twitcreds.access_token_secret, {media:base} ,'' , function (err, data, res){
+				oa.post('https://upload.twitter.com/1.1/media/upload.json', twitter.access_token, twitter.access_token_secret, {media:base} ,'' , function (err, data, res){
 					if (err) {
 						console.error('Upload failure to the Twitter Upload service, service says : ');
 						console.error(err);
