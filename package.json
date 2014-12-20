@@ -1,0 +1,26 @@
+{
+  "name": "christmastweeter",
+  "version": "0.0.1",
+  "description": "2014 Bladow Christmas cards via Twitter",
+  "main": "christmastweeter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"start": "node ./christmastweeter.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bladow/christmastweeter.git"
+  },
+  "author": "Garrett Bladow",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bladow/christmastweeter/issues"
+  },
+  "homepage": "https://github.com/bladow/christmastweeter",
+  "dependencies": {
+	"twit": "1.1.18",
+    "caption": "0.0.1",
+	"oauth":"0.9.12",
+	"config":"1.9.0"
+  }
+}
